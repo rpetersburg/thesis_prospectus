@@ -1,19 +1,24 @@
-\documentclass[modern]{aastex61}
+\documentclass[12pt]{article}
+\usepackage[margin=1.0in]{geometry}
+
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{multirow}
+\usepackage{siunitx}
 
-\shorttitle{Thesis Prospectus}
-\shortauthors{Petersburg R.}
+\title{Thesis Prospectus:\\ Novel Methods of Wavelength Calibration for Fiber-fed Radial Velocity Spectroscopy}
+
+\author{Ryan Petersburg\\ Department of Physics, Yale University
+\and Thesis Advisor: Professor Debra A. Fischer}
+\date{August 15, 2018}
 
 \begin{document}
 
-\title{Thesis Prospectus: Novel Methods of Wavelength Calibration for Fiber-fed Radial Velocity Spectroscopy}
-
-\author{Ryan Petersburg}
-\affil{Department of Physics, Yale University}
+\maketitle
 
 \begin{abstract}
+
+Wavelength calibration is naturally a necessary step in spectroscopic measurement. Within the field of exoplanet detection through stellar radial velocities, however, extreme precision of wavelength calibration is absolutely critical. In the advent of Earth-like exoplanet discovery around G \& K spectral-type stars, the upper limit for these measurements is $10^{-11}$, or less than $10^{-4}$ \SI{}{\pico\meter} stability at \SI{1500}{\nano\meter}.
 
 \end{abstract}
 
@@ -21,7 +26,14 @@
 
 \section{Introduction}
 
+Radial velocity (RV) exoplanet detection hinges on the ability to accurately calibrate stellar spectra. 
+
+Through my thesis work, I am tackling the issues of RV wavelength calibration from three distinct angles: In Section \ref{sec:modal_noise}, using data from an experiment I constructed in the Exoplanet Lab, I have designed and tested a quasi-chaotic agitation device that can optimally mitigate modal noise in optical fibers fed into an RV spectrograph. In Section \ref{sec:spec_perf}, I introduce Spectro-perfectionism and how deconvolution algorithms can be used to increase S/N and resolution for wavelength calibration data. Finally, in Section \ref{sec:astrocomb}, I discuss my plans for a cheaper and more reliable laser frequency comb composed of an electro-optic modulation comb and an aluminum nitride waveguide.
+
 \section{Modal Noise Mitigation}
+\label{sec:modal_noise}
+
+
 
 \subsection{Results from in-lab testing}
 
@@ -30,26 +42,32 @@
 \subsection{Proposed EXPRES + LFC testing}
 
 \section{Spectro-perfectionism}
+\label{sec:spec_perf}
+
+What if it was possible to increase the signal-to-noise and resolution of spectrographs simply through data extraction?
 
 \subsection{Point Spread Function Modeling}
 
-\subsection{Preliminary results using AlN microcomb and ThAr}
+\subsection{Preliminary PSF results using AlN microcomb and ThAr}
 
-\subsection{Comparison of modeled RV results}
+\subsection{Preliminary Spectro-perfectionism algorithm results}
 
-\section{Electro-Optic Modulation and Aluminum Nitride Astrocomb}
+\subsection{Proposed comparison of SP against optimal extraction with modeled RV results}
 
-\subsection{Comb Optical Design}
+\section{Aluminum Nitride Astrocomb}
+\label{sec:astrocomb}
+
+\subsection{Astrocomb Optical Design}
 
 \subsection{Feedback controls and expected precision}
 
-\subsection{Comparison against Menlo LFC}
+\subsection{Proposed comparison against Menlo LFC}
 
-\section{Proposed Timeline}
+\section{Discussion and Proposed Timeline}
 
 \pagebreak
 
 \bibliographystyle{aasjournal}
-\bibliography{}
+\bibliography{thesis_prospectus}
 
 \end{document}
