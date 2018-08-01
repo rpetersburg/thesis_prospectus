@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[margin=1.0in]{geometry}
 
 \usepackage{hyperref}
@@ -6,10 +6,13 @@
 \usepackage{multirow}
 \usepackage{siunitx}
 
-\title{Thesis Prospectus:\\ Novel Methods of Wavelength Calibration for Fiber-fed Radial Velocity Spectroscopy}
+\title{Novel Methods of Wavelength Calibration for Fiber-fed Radial Velocity Spectroscopy}
 
-\author{Ryan Petersburg\\ Department of Physics, Yale University
-\and Thesis Advisor: Professor Debra A. Fischer}
+\author{Ryan Petersburg\\
+Yale University Department of Physics\\
+Advisor: Debra Fischer\\
+\\
+Thesis Prospectus}
 \date{August 2018}
 
 \begin{document}
@@ -17,6 +20,9 @@
 \maketitle
 
 \begin{abstract}
+
+Measuring the radial velocity of a star to high precision hinges on the ability to accurately wavelength calibrate spectra.
+
 
 Wavelength calibration is naturally a necessary step in spectroscopic measurement. Within the field of exoplanet detection through stellar radial velocities, however, extreme precision of wavelength calibration is absolutely critical. In the advent of Earth-like exoplanet discovery around G \& K spectral-type stars, the upper limit for these measurements is $10^{-11}$, or less than $10^{-4}$ \SI{}{\pico\meter} stability at \SI{1500}{\nano\meter}.
 
@@ -26,16 +32,43 @@ Wavelength calibration is naturally a necessary step in spectroscopic measuremen
 
 \section{Introduction}
 
-Radial velocity (RV) exoplanet detection hinges on the ability to accurately calibrate stellar spectra.
+The discovery of less massive and longer period planets using the stellar radial velocity (RV) method requires an unprecedented level of spectroscopic precision. The current goal of RV spectroscopy is \SI{10}{\centi\meter\per\second} precision, a factor of 10 better than the current state-of-the-art spectrographs, thereby allowing the discovery of Earth-like planets orbiting G and K stars in their respective habitable zones \cite{Fischer2016}. The next-generation of visible-band RV spectrographs---including the EXtreme PREcision Spectrograph (EXPRES) \cite{Jurgenson2016}, the instrument most relevant to my research---are utilizing precision engineering and extreme environmental stability to reach this goal.
 
-There are three distinct regimes pertaining to wavelength calibration with which RV exoplanets scientists are concerned:
+Regardless of the steps taken to stabilize the spectrograph, RV precision is ultimately limited by the ability to accurately calibrate stellar spectra. The process for wavelength calibration is rather intuitive: compare the absorption lines of the RV-shifted stellar spectrum with a well-known, un-shifted spectrum. There are three distinct steps to optimally achieve this goal:
 \begin{enumerate}
-    \item a calibration light source that fills the bandpass of the instrument while maintaining a level of stability below the RV precision requirements,
-    \item coupling of this light source to the spectrograph detector such that the light is not perturbed enough to alter results from the calibration, and
-    \item software extraction of the calibration spectrum that is minimally affected by imperfections in the spectrograph detector
+    \item purchase or develop a calibration light source that fills the bandpass of the spectrograph while maintaining a level of stability within the RV precision requirements,
+    \item optically couple the light source to the spectrograph detector without degrading the signal or introducing time-dependent shifts to the spectrum, and
+    \item code an extraction algorithm that maximizes signal-to-noise and resolution of the calibration spectrum without increasing systematic error.
 \end{enumerate}
 
-Therefore, through my thesis work, I would like to develop novel methods for each of these three regimes. You'll notice that this document is similarly organized into three major sections, each pertaining to one of the above three topics. In Section \ref{sec:astrocomb}, I discuss my plans to develop a cheaper and more reliable wavelength calibration source through collaboration with the Yale Nanodevices Lab and their experience with electro-optic modulation combs and aluminum nitride waveguides. In Section \ref{sec:modal_noise}, I present results from my previous work with mitigating modal noise through optical fiber agitation and my plans to demonstrate how this work has improved EXPRES calibration. Finally, in Section \ref{sec:spec_perf}, I introduce Spectro-perfectionism and how deconvolution algorithms can be used to increase signal-to-noise and resolution for wavelength calibration data.
+For my thesis work, I am proposing novel methods that address each of these three steps. For simplicity, this prospectus (and my eventual dissertation) is organized into three major sections, each pertaining to my work with one of the above topics. Since these topics are so distinct, I provide background for them individually in each of the following sections, instead of trying to compact it all into the introduction. In Section \ref{sec:astrocomb}, I discuss my plans to develop a cheaper and more reliable wavelength calibration source by combining an electro-optic modulation comb with an aluminum nitride waveguide. In Section \ref{sec:modal_noise}, I present results from my previous work mitigating modal noise through optical fiber agitation and my plans to demonstrate how this work has improved EXPRES calibration. Finally, in Section \ref{sec:spec_perf}, I introduce Spectro-perfectionism and how I am developing a deconvolution algorithm to increase signal-to-noise and resolution for extracted wavelength calibration spectra.
+
+\section{Aluminum Nitride Astrocomb}
+\label{sec:astrocomb}
+
+Historically, astronomers have used iodine absorption lines imprinted on the stellar spectrum [CITATION NEEDED] or thorium argon emission lines bracketing each observation [CITATION NEEDED]. These sources are unfortunately limited to approximately \SI{1}{\meter\per\second} precision \cite{Fischer2016}, therefore multiple versions of laser frequency comb (LFC) are becoming the new standard method of wavelength calibration.
+
+We need a cheaper and more reliable way to calibrate our spectrograph. The Menlo LFC is almost \$800,000 (including maintenance) and has been finicky at best.
+
+Aluminum nitride is good as a supercontinuum producing material (NEED TO LOOK INTO SOURCES FOR THIS).
+
+Results from Hong's lab with 80 MHz source seem promising for this application.
+
+\subsection{Astrocomb Optical Design}
+
+Combine a triple element electro-optic modulator with an Aluminum Nitride waveguide.
+
+\subsection{Feedback controls and expected precision}
+
+Feedback to temperature of pump laser to control central wavelength.
+
+Feedback to microwave oscillator to control comb line spacing.
+
+Feedback to modulator phase controllers to optimize width and initial comb.
+
+\subsection{Proposed comparison against Menlo LFC}
+
+Can compare cross-correlations of Menlo LFC and astocomb to understand differences in precision.
 
 
 \section{Modal Noise Mitigation}
@@ -78,31 +111,6 @@ Apparent increase in LFC resolution and S/N without changing the fidelity of the
 
 Use 51Peg to compare RV results. It will be good to see the scatter and errors from expected RV results.
 
-\section{Aluminum Nitride Astrocomb}
-\label{sec:astrocomb}
-
-We ened a cheaper and more reliable way to calibrate our spectrograph. The Menlo LFC is almost \$800,000 (including maintenance) and has been finicky at best.
-
-Aluminum nitride is good as a supercontinuum producing material (NEED TO LOOK INTO SOURCES FOR THIS).
-
-Results from Hong's lab with 80 MHz source seem promising for this application.
-
-\subsection{Astrocomb Optical Design}
-
-Combine a triple element electro-optic modulator with an Aluminum Nitride waveguide.
-
-\subsection{Feedback controls and expected precision}
-
-Feedback to temperature of pump laser to control central wavelength.
-
-Feedback to microwave oscillator to control comb line spacing.
-
-Feedback to modulator phase controllers to optimize width and initial comb.
-
-\subsection{Proposed comparison against Menlo LFC}
-
-Can compare cross-correlations of Menlo LFC and astocomb to understand differences in precision.
-
 \section{Discussion and Proposed Timeline}
 
 Finishing up with modal noise work. Already have published paper from this (Feb 2018). Can take EXPRES data by end of year (once engineering improvements are made).
@@ -111,7 +119,7 @@ Finishing up with modal noise work. Already have published paper from this (Feb 
 
 \pagebreak
 
-\bibliographystyle{aasjournal}
+\bibliographystyle{plain}
 \bibliography{thesis_prospectus}
 
 \end{document}
