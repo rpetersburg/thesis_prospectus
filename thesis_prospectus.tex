@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1.0in]{geometry}
 
+\usepackage{amsmath}
 \usepackage{wrapfig}
 \usepackage{natbib}
 \usepackage{graphicx}
@@ -9,6 +10,7 @@
 \usepackage{multirow}
 \usepackage{siunitx}
 \usepackage{bm}
+\usepackage{bbm}
 
 \title{Novel Methods of Wavelength Calibration for Fiber-fed Radial Velocity Spectroscopy}
 
@@ -47,7 +49,7 @@ Regardless of the steps taken to stabilize the spectrograph, RV precision is ult
 
 For my thesis work, I am proposing novel methods that address each of these three steps. For simplicity, this prospectus (and my eventual dissertation) is organized into three major sections, each pertaining to my work with one of the above topics. Since these topics are so distinct, I provide background for them individually in each of the following sections, instead of trying to compact it all into the introduction. In Section \ref{sec:astrocomb}, I discuss my plans to develop a cheaper and more reliable wavelength calibration source by combining an electro-optic modulation comb with an aluminum nitride waveguide. In Section \ref{sec:modal_noise}, I present results from my previous work mitigating modal noise through optical fiber agitation and my plans to demonstrate how this work has improved EXPRES calibration. Finally, in Section \ref{sec:spec_perf}, I introduce Spectro-perfectionism and how I am developing a deconvolution algorithm to increase signal-to-noise and resolution for extracted wavelength calibration spectra.
 
-\section{Aluminum Nitride Astrocomb \footnote{The work in this section was proposed to the NSF, NASA, and Keck Foundation, therefore much of the information here was drawn from those proposals.}}
+\section{Aluminum Nitride Astrocomb \footnote{The work in this section was proposed to the NSF, NASA, and Keck Foundation, therefore much of the language here was drawn from those proposals.}}
 \label{sec:astrocomb}
 
 In order to extract stellar spectra, RV spectrographs use the spectra of well-characterized and stable light sources as a simultaneous reference on the spectrograph camera. Historically, thorium argon lamps and iodine reference cells have been used to calibrate RV spectrographs since their spectral properties are well understood and their bandwidth covers most of the visible spectrum. However, both of these light sources have inherent issues that limit RV measurements to approximately 1 m/s precision. Th-Ar emission lines are broad, saturated, and irregularly spaced, meaning some wavelength regions are less well calibrated than others. The iodine technique, which applies absorption wavelengths directly on the stellar spectrum, masks the subtle spectral line profile effects imprinted by stellar activity. Furthermore, iodine introduces complexity, such as parameter cross talk, to the forward modeling \citep{Spronck2015} and the cells themselves may not have long term mechanical stability \citep{Fischer2014a}.
@@ -118,7 +120,7 @@ Fiber coupling the spectrograph to the telescope has become an essential and sta
 
 Optical fibers also transmit light from calibration sources, such as wavelength calibrators and broadband flat-field sources, to the spectrograph. Laser frequency combs, especially the  astrocomb \citep{Probst2014} recently deployed at HARPS and soon at EXPRES, produce thousands of ultra-narrow, evenly spaced emission lines over a wide frequency range. When these highly coherent lines propagate through a multi-mode fiber, they create a source of noise that limits the signal-to-noise ratio (S/N) of the instrument and potentially induces false RV signals in the data. This noise is caused by interference between the finite number of electromagnetic modes that can propagate along a multi-mode fiber, and therefore the term \textit{modal noise} has been coined for this effect \citep{Epworth1978}.
 
-For this part of my thesis, I have discerned an optimal strategy for reducing modal noise using mechanical agitation on multi-mode fibers propagating coherent visible light. This section begins with a definition of modal noise and an exploration for how previous experiments have mitigated it through static and dynamic methods (Section \ref{subsec:modal_noise_intro}). I then describe a novel form of quasi-chaotic coupled agitation and discuss results that show improvement in S/N and RV precision (Section \ref{subsec:modal_noise_results}). Finally, I describe my efforts to build an optimal agitator for EXPRES and propose an experiment to approximate the improvements it makes to calibration spectra (Section \ref{subsec:modal_noise_testing}).
+For this part of my thesis, I have discerned an optimal strategy for reducing modal noise using mechanical agitation on multi-mode fibers propagating coherent visible light and I expect to show that this has significantly reduced potential RV errors. This section begins with a definition of modal noise and an exploration for how previous experiments have mitigated it through static and dynamic methods (Section \ref{subsec:modal_noise_intro}). I then describe a novel form of quasi-chaotic coupled agitation and discuss results that show improvement in S/N and RV precision (Section \ref{subsec:modal_noise_results}). Finally, I describe my efforts to build an optimal agitator for EXPRES and propose an experiment to approximate the improvements it makes to EXPRES calibration spectra (Section \ref{subsec:modal_noise_testing}).
 
 \subsection{Background}
 \label{subsec:modal_noise_intro}
@@ -144,7 +146,7 @@ where $A$ is the cross-sectional area of the fiber and $C_{s}$ is a constant coe
     \begin{center}
 	    \includegraphics[width=0.5\textwidth]{images/fiber_example.pdf}
 	\end{center}
-	\caption{Examples of unmitigated modal noise for a \SI{200}{\micro\meter} circular (left), \SI{200}{\micro\meter} octagonal (middle), and \SI{100x300}{\micro\meter} rectangular (right) optical fiber. All three fibers shown here have approximately the same cross-sectional area, meaning that they each are propagating about the same number of electromagnetic modes (see Equation (\ref{eq:mode_area})). Brightness in this image is scaled by (photon count)$^{0.6}$ for better presentation of the range of speckle brightness. The contrast of the speckles is therefore \textit{worse} than what is shown here.}
+	\caption{Examples of unmitigated modal noise for a \SI{200}{\micro\meter} circular (left), \SI{200}{\micro\meter} octagonal (middle), and \SI{100x300}{\micro\meter} rectangular (right) optical fiber. All three fibers shown here have approximately the same cross-sectional area, meaning that they each are propagating about the same number of electromagnetic modes (see Eq. (\ref{eq:mode_area})). Brightness in this image is scaled by (photon count)$^{0.6}$ for better presentation of the range of speckle brightness. The contrast of the speckles is therefore \textit{worse} than what is shown here.}
 \label{fig:fiber_example}
 \end{figure}
 
@@ -163,14 +165,30 @@ Experimental results of these conditions have been well documented. S/N due to m
 \item remain the same for differing fiber lengths greater than a few meters \citep{Baudrand2001}, and
 \item improve for non-circular fibers over circular fibers \citep{Sablowski2016, Sturmer2016}.
 \end{enumerate}
-All of these results follow exactly from Equation (\ref{eq:mode_area}) and implies that fibers with non-circular geometries have larger $C_{s}$.
+All of these results follow exactly from Eq. (\ref{eq:mode_area}) and implies that fibers with non-circular geometries have larger $C_{s}$.
 
 \subsubsection{Systematic variations}
 \label{subsec:sys_var}
 
 Since the resultant speckle pattern is dependent on dynamic optical properties of the fiber, modal noise can induce false RV's on the spectrograph \citep{Mahadevan2014}. The spectrograph input is directly imaged onto the detector, so any spatial variation in intensity of the injected light will change the apparent line spread function in the spectra and cause errors in the assigned RVs. If these drifts have some regular period, modal noise could even cause errant planet signatures.
 
-As is clear in Equation (\ref{eq:mode_area}), modal noise is heavily wavelength dependent. When the center wavelength of a coherent light source changes, the speckle pattern subsequently shifts.  Speckle patterns can be visually distinguished when the injected wavelength of light changes by at least \SI{8}{\pico\meter} at \SI{1500}{\nano\meter} \citep{Redding2013}. Next-generation RV spectrographs are using laser frequency combs with $10^{-11}$ stability \citep{Probst2014}, or less than $10^{-4}$ \SI{}{\pico\meter} stability at \SI{1500}{\nano\meter}, rendering speckle drift due to wavelength drift effectively irrelevant. However, since the speckle pattern is smoothly wavelength dependent, the resultant spectral line spread function of a frequency comb is correlated between neighboring lines, meaning any drift due to modal noise is not necessarily randomly distributed across the spectrum.
+The resultant RV precision ($\sigma_{RV}$) due to a shifting speckle pattern centroid at the end of a fiber is calculated as
+\begin{equation}
+\sigma_{RV} \approx \frac{c}{R} \frac{\sigma_d}{D},
+\label{eq:rv_error}
+\end{equation}
+where $c$ is the speed of light in a vacuum, $R$ is the resolution of the spectrograph, $\sigma_d$ is the standard deviation of fiber near-field centroid drift in the dispersion direction, and $D$ is the slit width (or short-end length of a rectangular fiber). Please see \citet{Petersburg2018} for a full derviation. Notice that for a $R=150,000$ spectrograph fed by a \SI{33}{\micro\meter} slit attempting to reach \SI{1.0}{\meter\per\second} RV precision per line, the required stability of the centroid along the dispersion direction is \SI{0.0165}{\micro\meter}.
+
+Importantly, $\sigma_{RV}$ is only the RV error \textit{per resolution element} or \textit{per line} from a wavelength calibration source. Averaging over $N$ lines with independent modal structure, we can divide $\sigma_{RV}$ by $\sqrt{N}$ to approximate total RV error. $N$ may not necessarily equal the total number calibration lines, however, since two neighboring wavelengths may propagate with the same number of modes and thus the same modal structure. Recall from Eq. (\ref{eq:mode_area}) that the number of supported modes is a function of wavelength. With a high number (thousands) of propagating modes, we do not expect adding or subtracting a single mode will result in a statistically independent modal noise structure. Though, such a study is beyond the scope of this paper.
+
+However, assuming a difference in 10 supported modes makes the structure effectively independent, we assert
+\begin{equation}
+N \approx \frac{M_s(\lambda_{min}) - M_s(\lambda_{max})}{10},
+\label{eq:N}
+\end{equation}
+where $\lambda_{min}$ and $\lambda_{max}$ are, respectively, the minimum and maximum wavelengths of the relevant calibration region. Note that the calibration source needs to be sufficiently dense (i.e. the number of lines is greater than $N$) to properly use this approximation. Even though Eq. (\ref{eq:N}) has not been empirically tested, since it requires a comprehensive study on the systematic correlation of modal noise, we believe it to be a rather conservative estimate for statistical reduction.
+
+As is clear in Eq. (\ref{eq:mode_area}), modal noise is heavily wavelength dependent. When the center wavelength of a coherent light source changes, the speckle pattern subsequently shifts.  Speckle patterns can be visually distinguished when the injected wavelength of light changes by at least \SI{8}{\pico\meter} at \SI{1500}{\nano\meter} \citep{Redding2013}. Next-generation RV spectrographs are using laser frequency combs with $10^{-11}$ stability \citep{Probst2014}, or less than $10^{-4}$ \SI{}{\pico\meter} stability at \SI{1500}{\nano\meter}, rendering speckle drift due to wavelength drift effectively irrelevant. However, since the speckle pattern is smoothly wavelength dependent, the resultant spectral line spread function of a frequency comb is correlated between neighboring lines, meaning any drift due to modal noise is not necessarily randomly distributed across the spectrum.
 
 The speckle pattern seen at the end of a fiber changes over time most commonly because of \citep{Epworth1978}:
 \begin{enumerate}
@@ -241,78 +259,13 @@ Although this has been good for subjective intuition, the exact mechanisms behin
 \subsection{Results from in-lab testing}
 \label{subsec:modal_noise_results}
 
-For this part my thesis, I have filled out the parameter space of fiber agitation methods further than previous studies. I am interested in seeing trends across different agitation amplitudes and frequencies, fiber shapes and sizes, and coupling permutations to make more precise conclusions about the nature of modal noise mitigation through fiber agitation. I present a few of the most important plots here, but details can be found in my publication on the subject \citep{Petersburg2018} and a full description of the experiment and my results will be included in my dissertation.
-
-\subsubsection{Method of agitation and fiber geometry}
-
-We compare the two individual agitation methods and coupled agitation using a collection of five fibers of varying shapes and sizes (see the legend in Figure \ref{fig:ag_snr}). The linear agitator is set to an amplitude of \SI{80}{\milli\meter} and the frequency of both agitators to \SI{1.0}{\hertz}. All images are taken with \SI{1.0}{\second} exposures.
-
-Results for the single-rotation and 10-rotation cases are shown in Figure \ref{fig:ag_snr}. Across all fiber shapes and sizes and number of rotations, the linear agitator appears to be slightly better than the circular agitator. There is a similar increase in S/N when looking at coupled agitation in single-rotations. However, coupling the agitation over 10-rotations significantly increases the S/N for all fiber configurations.
-
-\begin{figure}
-\centering
-	\includegraphics[width=0.5\columnwidth]{images/ag_snr.pdf}
-	\caption{S/N comparison for varying fiber geometries and large-amplitude agitation methods. The S/N is presented for both single-rotation and 10-rotation images.}
-\label{fig:ag_snr}
-\end{figure}
-
-To better understand why coupled agitation is more effective at reducing modal noise at longer exposures, we also analyze the effect of each agitation method over multiple rotations, as shown in Figure \ref{fig:rect_snr_vs_time} for the \SI{100x300}{\micro\meter} rectangular fiber. The S/N shows significant improvement beyond a single rotation when coupling the agitation methods. The rate of this improvement is about the same (if not slightly better) than that when the fiber is lit by an LED, a relatively incoherent source. Circular and linear agitation, on the other hand, effectively plateau after the first rotation. We see identical effects for all of the remaining fiber shapes and sizes.
-
-\begin{figure}
-\centering
-	\includegraphics[width=0.5\columnwidth]{images/rect_snr_vs_time.pdf}
-	\caption{S/N dependence on number of rotations for the \SI{100x300}{\micro\meter} rectangular fiber using various agitation methods. We find similar relationships for the all of the remaining fiber shapes and sizes.}
-\label{fig:rect_snr_vs_time}
-\end{figure}
-
-10-rotation images of the three larger fibers using the coupled agitation method are shown in Figure \ref{fig:fiber_improved}. Compared to those shown in Figure \ref{fig:fiber_example}, the speckle patterns that appear when using coupled agitation are nearly nonexistent.
-
-\begin{figure}
-    \begin{center}
-    	\includegraphics[width=0.48\textwidth]{images/fiber_improved.pdf}
-    \end{center}
-	\caption{10-rotation, coupled agitation images using the same three fibers shown in Figure \ref{fig:fiber_example}.  The diffraction pattern is clearly seen, but otherwise, the presence of speckles in these images is significantly diminished. Brightness is directly scaled with photon count in these images.}
-\label{fig:fiber_improved}
-\end{figure}
-
-\subsubsection{Amplitude and frequency of agitation}
-
-We use the \SI{100x300}{\micro\meter} rectangular fiber and the two agitators separately to test the effects of agitation amplitude and frequency of rotation on the S/N. We can only test amplitude on the linear agitator and take an image set for each position on the rotating arm. We test frequency on each of the linear and circular agitators at approximately equally spaced frequencies across their entire frequency range.
-
-Results from these tests are shown in Figure \ref{fig:amp_freq_snr}. There is a strong positive correlation between linear agitation amplitude using both the single-rotation and 10-rotation analyses. There also appears to be a slight increase in S/N for the linear agitator at higher frequencies after ten rotations; however, there is no such increase for the single-rotations or any of the frequencies when using the circular agitator.
-
-\begin{figure}
-\centering
-	\includegraphics[width=\textwidth]{images/amp_freq_snr.pdf}
-	\caption{S/N comparison for varying amplitudes using the linear agitator (left) and varying frequencies using each of the linear (center) and circular (right) agitators.}
-\label{fig:amp_freq_snr}
-\end{figure}
-
-\subsubsection{RV precision}
-
-As discussed in Section \ref{subsec:sys_var}, optical fiber modal noise is an issue of centroid drift as well as diminished S/N. To observe how the centroid actually drifts over time, we test our agitation method on the \SI{100x300}{\micro\meter} rectangular fiber over three hundred \SI{1.0}{\second} exposures.
-
-The resultant RV precision ($\sigma_{RV}$) due to a shifting speckle pattern centroid at the end of a fiber is calculated as
-\begin{equation}
-\sigma_{RV} \approx \frac{c}{R} \frac{\sigma_d}{D},
-\label{eq:rv_error}
-\end{equation}
-where $c$ is the speed of light in a vacuum, $R$ is the resolution of the spectrograph, $\sigma_d$ is the standard deviation of fiber near-field centroid drift in the dispersion direction, and $D$ is the slit width (or short-end length of a rectangular fiber). Please see \citet{Petersburg2018} for a full derviation. Notice that for a $R=150,000$ spectrograph fed by a \SI{33}{\micro\meter} slit attempting to reach \SI{1.0}{\meter\per\second} RV precision per line, the required stability of the centroid along the dispersion direction is \SI{0.0165}{\micro\meter}.
-
-Importantly, $\sigma_{RV}$ is only the RV error \textit{per resolution element} or \textit{per line} from a wavelength calibration source. Averaging over $N$ lines with independent modal structure, we can divide $\sigma_{RV}$ by $\sqrt{N}$ to approximate total RV error. $N$ may not necessarily equal the total number calibration lines, however, since two neighboring wavelengths may propagate with the same number of modes and thus the same modal structure. Recall from Equation (\ref{eq:mode_area}) that the number of supported modes is a function of wavelength. With a high number (thousands) of propagating modes, we do not expect adding or subtracting a single mode will result in a statistically independent modal noise structure. Though, such a study is beyond the scope of this paper.
-
-However, assuming a difference in 10 supported modes makes the structure effectively independent, we assert
-\begin{equation}
-N \approx \frac{M_s(\lambda_{min}) - M_s(\lambda_{max})}{10},
-\label{eq:N}
-\end{equation}
-where $\lambda_{min}$ and $\lambda_{max}$ are, respectively, the minimum and maximum wavelengths of the relevant calibration region. Note that the calibration source needs to be sufficiently dense (i.e. the number of lines is greater than $N$) to properly use this approximation. Even though Equation (\ref{eq:N}) has not been empirically tested, since it requires a comprehensive study on the systematic correlation of modal noise, we believe it to be a rather conservative estimate for statistical reduction.
-
-The idealized agitation method we use to test RV precision includes the circular agitator oscillating at \SI{1.1}{\hertz} and the linear agitator set at \SI{240}{\milli\meter} and \SI{1.0}{\hertz}. Keeping the two agitators at slightly different frequencies means that phase between them constantly changes and a large range of fiber configurations are reached after about \SI{10}{\second}.
-
-We compare this idealized method to the LED source (low modal noise), a slowly agitated fiber (high modal noise), and a fiber moved as if it were attached to a telescope (very high modal noise). For the slow agitation test, we set only the linear agitator at \SI{80}{\milli\meter} and \SI{0.03}{\hertz} meant to simulate a worst-case simple harmonic agitation method. To simulate the telescope motions, we use the linear agitator with \SI{80}{\milli\meter} amplitude but do not rotate continuously. Rather, we leave the agitator off most of the time except to turn it on briefly (about a quarter or half rotation) every 50 images. This approximates two conditions of the telescope: nearly still while tracking a star and sudden motion while switching targets.
-
-To calculate the RV error, we first find the centroid within the fiber face for each image, relative to the center of the fiber in order to remove the observable ($\sim 2$ pixel) drift of the fiber stage. We then project this centroid drift along the short axis of the rectangle. We also average these centroids over sets of 10 and 30 images to approximate the centroid drift for longer exposure times. For each length of exposure, we calculate the standard deviation of the centroid drift and convert all values to RV using Equation (\ref{eq:rv_error}). The dispersion direction for a rectangular fiber is along the short end, meaning that the slit width $D$ is \SI{100}{\micro\meter}. The resolution of EXPRES is 150,000 for a \SI{33x132}{\micro\meter} rectangular fiber, so we use $R=50,000$ in Equation (\ref{eq:rv_error}) since our test fiber is three times as wide as the EXPRES fiber in the dispersion direction.
+I have actually already completed all of the work to fill out the parameter space of fiber agitation methods further than previous studies. I was able to find trends across different agitation amplitudes and frequencies, fiber shapes and sizes, and coupling permutations to make more precise conclusions about the nature of modal noise mitigation through fiber agitation. A full description of the experiment and my results can be found in my paper on the subject \citep{Petersburg2018} and will be included in my dissertation. For brevity, the following are the general conclusions that I was able to draw from these results:
+\begin{enumerate}
+\item Agitating the fiber with the \textbf{most modes}, regardless of its placement in the fiber architecture, yields the best S/N. This typically means the fiber with the largest core size and lowest azimuthal symmetry.
+\item \textbf{Large-amplitude} agitation is much more important than high-frequency agitation as long as the agitation method reaches at least one full rotation within an exposure. Adding a ``tweeter'' shows minimal improvement over large-amplitude motion alone.
+\item \textbf{Chaotic agitation}, such as the motion created by our ``coupled'' agitator, is much more effective at mitigating modal noise than typical harmonic agitation and continues to improve S/N over multiple rotations. The frequency of this method should place the fiber into as many configurations as possible over a single exposure without over-stressing the fiber.
+\item \textbf{Agitating more fibers} in a fiber architecture, especially when the fibers have different geometry (size/shape), will help increase S/N. Using a single agitator with one fiber looped over it several times, however, helps only slightly. Rather, adding a second independent agitator (i.e. chaotic agitation) increases S/N significantly more.
+\end{enumerate}
 
 \begin{figure}
 \centering
@@ -321,9 +274,15 @@ To calculate the RV error, we first find the centroid within the fiber face for 
 \label{fig:rv_error}
 \end{figure}
 
-The results, shown in Figure \ref{fig:rv_error}, indicate that continuous agitation is essential to control modal noise. The simulated telescope yields RV errors above \SI{20}{\meter\per\second} that do not average out well with longer exposures. Using our idealized method of coupled agitation reduces errors from slow agitation by about 5--8 times and are so far minimized to about \SI{60}{\centi\meter\per\second} when using \SI{30}{\second} exposures. The minimum RV error we could measure in this test, by using the LED source, was \SI{26}{\centi\meter\per\second}. Therefore, our coupled agitation method is less than a factor of 3 from reaching our noise floor.
+I also include my results from the paper that directly relate the effects of modal noise to potential RV errors in a spectrograph. To observe how the centroid of modal noise actually drifts over time, I tested a quasi-chaotic agitation method on the \SI{100x300}{\micro\meter} rectangular fiber over three hundred \SI{1.0}{\second} exposures. This agitation method I used to test RV precision includes a circular agitator oscillating at \SI{1.1}{\hertz} and a linear agitator set at \SI{240}{\milli\meter} and \SI{1.0}{\hertz}. Keeping the two agitators at slightly different frequencies means that phase between them constantly changes and a large range of fiber configurations are reached after about \SI{10}{\second}.
 
-The calculated \SI{60}{\centi\meter\per\second} error for coupled agitation is the RV error \textit{per line} in the spectrograph. Thus, the total RV error could be reduced to below \SI{10}{\centi\meter\per\second} with only 36 mode-independent calibration lines. EXPRES is using a laser frequency comb with approximately {\SI{14}{\giga\hertz}} line spacing across 450-{\SI{700}{\nano\meter}} fed by a {\SI{33x132}{\micro\meter}} rectangular fiber at $f/3.0$ resulting in almost 17,000 calibration lines. Applying Equation (\ref{eq:N}), EXPRES will have $N=350$, reducing the expected RV error of the instrument to less than {\SI{3.2}{\centi\meter\per\second}}.
+I compared this idealized method to an LED source (low modal noise), a slowly agitated fiber (high modal noise), and a fiber moved as if it were attached to a telescope (very high modal noise). For the slow agitation test, I set only the linear agitator at \SI{80}{\milli\meter} and \SI{0.03}{\hertz} meant to simulate a worst-case simple harmonic agitation method. To simulate the telescope motions, I used the linear agitator with \SI{80}{\milli\meter} amplitude but did not rotate continuously. Rather, I left the agitator off most of the time except to turn it on briefly (about a quarter or half rotation) every 50 images. This approximates two conditions of the telescope: nearly still while tracking a star and sudden motion while switching targets.
+
+To calculate the RV error, I first found the centroid within the fiber face for each image, relative to the center of the fiber in order to remove the observable ($\sim 2$ pixel) drift of the fiber stage. I then projected this centroid drift along the short axis of the rectangle. I also averaged these centroids over sets of 10 and 30 images to approximate the centroid drift for longer exposure times. For each length of exposure, I calculated the standard deviation of the centroid drift and converted all values to RV using Eq. (\ref{eq:rv_error}). The dispersion direction for a rectangular fiber is along the short end, meaning that the slit width $D$ is \SI{100}{\micro\meter}. The resolution of EXPRES is 150,000 for a \SI{33x132}{\micro\meter} rectangular fiber, so we use $R=50,000$ in Eq. (\ref{eq:rv_error}) since our test fiber is three times as wide as the EXPRES fiber in the dispersion direction.
+
+The results, shown in Figure \ref{fig:rv_error}, indicate that continuous agitation is essential to control modal noise. The simulated telescope yields RV errors above \SI{20}{\meter\per\second} that do not average out well with longer exposures. Using the idealized method of coupled agitation reduces errors from slow agitation by about 5--8 times and are so far minimized to about \SI{60}{\centi\meter\per\second} when using \SI{30}{\second} exposures. The minimum RV error I could measure in this test, by using the LED source, was \SI{26}{\centi\meter\per\second}. Therefore, the coupled agitation method is less than a factor of 3 from reaching the noise floor.
+
+The calculated \SI{60}{\centi\meter\per\second} error for coupled agitation is the RV error \textit{per line} in the spectrograph. Thus, the total RV error could be reduced to below \SI{10}{\centi\meter\per\second} with only 36 mode-independent calibration lines. EXPRES is using a laser frequency comb with approximately {\SI{14}{\giga\hertz}} line spacing across 450-{\SI{700}{\nano\meter}} fed by a {\SI{33x132}{\micro\meter}} rectangular fiber at $f/3.0$ resulting in almost 17,000 calibration lines. Applying Eq. (\ref{eq:N}), EXPRES will have $N=350$, reducing the expected RV error of the instrument to less than {\SI{3.2}{\centi\meter\per\second}}.
 
 \subsection{EXPRES agitator and proposed testing}
 \label{subsec:modal_noise_testing}
@@ -344,8 +303,8 @@ Now that this fiber agitator is installed on an active spectrograph, I would lik
 \end{enumerate}
 The data for this experiment will be EXPRES wavelength calibration spectra (ThAr and Menlo LFC) with the agitator turned on and off. I will also vary the length of exposures (after changing the intensity of each light source using neutral density) for both of these cases in a similar way to the above experiments. By comparing the wavelength solutions extracted from these sets of data, I will be able to answer the above questions respectively:
 \begin{enumerate}
-    \item If the scatter in residuals of the wavelength solution decrease with longer exposure time (i.e. more agitation), then there would be evidence that agitation is worthwhile for RV spectroscopy.
-    \item Assuming errors when the agitator is turned on are randomly distributed, if there is a trend to the difference between the wavelength solutions when the fiber agitator is on or off (i.e. the difference in one line strongly predicts the difference in the neighboring line), then there is evidence that modal noise is correlated by wavelength.
+    \item If the scatter in residuals of the wavelength solution decrease with more agitation (i.e. longer exposure times), then there would be evidence that agitation is worthwhile for RV spectroscopy.
+    \item Assuming errors when the agitator is turned on are randomly distributed, if there is a trend to the difference between the wavelength solutions when the fiber agitator is on or off (i.e. the difference in one line strongly predicts the difference in a neighboring line), then there is evidence that modal noise is correlated by wavelength.
 \end{enumerate}
 I expect to be able to complete these tasks with about a month of work, once the Menlo LFC comes back online and the EXPRES group develops a standardized method of calculating the wavelength solution.
 
@@ -390,7 +349,7 @@ The only thing remaining is to determine $\psi_{x,y}$. There are two possible ap
     \item use a low noise flat-field image $F_{x,y}$ that is taken by feeding a flat light source through the same path as the stellar spectrum. This image can be normalized (and possibly fit) to approximate $\psi_{x,y}$, or it can be used without normalization to produce a flat-normalized spectrum \citep{Zechmeister2013}.
 \end{enumerate}
 
-Although this method of optimal extraction has proven to be extremely prolific in the field of radial velocity echelle spectroscopy, it has a significant flaw: it does not take into account the full 2D PSF of the instrument. Thus, optimal extraction assumes that the spectrograph slit is uniformly aligned to the columns of the CCD and that the spectral information of a single wavelength bin is entirely contained in that column. However, the point spread function of echelle spectrographs typically envelope multiple columns of pixels (EXPRES was designed for a resolution element with 4 columns) and slight alignment errors could add an angle to the slit function (not even taking into account the possibility of a varying slit function angle across the CCD).
+Although this method of optimal extraction has proven to be extremely prolific in the field of radial velocity echelle spectroscopy, it has a significant flaw: it does not take into account the full 2D PSF of the instrument. Thus, optimal extraction assumes that the spectrograph slit is uniformly aligned to the columns of the CCD and that the spectral information of a single wavelength bin is entirely contained in that column. However, the point spread function of echelle spectrographs typically envelope multiple columns of pixels (EXPRES was designed for a resolution element containing 4 columns) and slight alignment errors could add an angle to the slit function (not even taking into account the possibility of a varying slit function angle across the CCD).
 
 Therefore, \citet{Bolton2009} rather found a solution to Eq. \ref{eq:least_squares} directly without any assumptions while using the entire 2D PSF. This solution in matrix notation is
 \begin{equation}
@@ -399,32 +358,86 @@ Therefore, \citet{Bolton2009} rather found a solution to Eq. \ref{eq:least_squar
 \end{equation}
 where $\bm{N}$ is the pixel noise matrix. Since pixel errors are typically treated as independent, this matrix tends to be diagonal.
 
-As explained by \citet{Bolton2009}, Eq. \ref{eq:bolton_solution} is actually a deconvolution algorithm. Since this algorithm yields a solution that exceeds the physical resolution of the instrument, it introduces severe ringing to the ultimate spectrum. However, this can be solved by reconvolving the spectrum back to the expected resolution.
-
-\citet{Bolton2009} have demonstrated that this technique yields better signal-to-noise than optimal extraction. However, they were only able to show this using simulated data that was, at most $51\times101$ pixels in size. Therefore, I am interested in expanding their work through a few different avenues.
+\citet{Bolton2009} have demonstrated that this technique yields better signal-to-noise than optimal extraction. However, they were only able to show this using simulated data that was, at most, $51\times101$ pixels in size. Therefore, I am interested in expanding their work through a few different avenues.
 \begin{enumerate}
-    \item Since the \citet{Bolton2009} data is purely simulated, they knew the exact PSF before executing the alorithm. I would need to measure the pixel-dependent PSF of EXPRES to even begin to use spectro-perfectionism.
+    \item Since the \citet{Bolton2009} data is purely simulated, they knew the exact PSF before executing the algorithm. I would need to measure the pixel-dependent PSF of EXPRES to even begin to use spectro-perfectionism.
     \item The EXPRES spectrograph CCD is $10k \times 10k$ pixels, much larger than the simulated data in \citet{Bolton2009}. Eq. \ref{eq:bolton_solution} is computationally expensive since the matrix $\Psi$ requires a PSF model for every wavelength bin.
     \item Eq. \ref{eq:bolton_solution} is a deconvolution algorithm, meaning it yields a solution that exceeds the physical resolution of the instrument. This introduces severe ringing to the resultant spectrum. \citet{Bolton2009} found a solution that involves ``reconvolving'' the spectrum back to the expected resolution, but this relies on taking the matrix square root of $\bm{\Psi}^T \bm{N}^{-1} \bm{\Psi}$ which is even more computationally expensive than the initial deconvolution.
 \end{enumerate}
-In the following sections, I detail my efforts to solve each of these problems and my expected results for my thesis.
+In the following sections, I detail my efforts to solve each of these problems and how I expect to yield results for my thesis.
 
 \subsection{Point Spread Function Modeling}
 \label{subsec:psf}
 
-The first step in constructing a spectro-perfectionism algorithm is determining the PSF of the instrument. Typically, the PSF of an instrument might be constant across the entire CCD, allowing simplification of the deconvolution. However, the PSF of EXPRES changes significantly between orders and even slightly along a single order. For example, the height of each order is about two pixels larger for the bluest orders when compared to the reddest orders.
+The first step in constructing a spectro-perfectionism algorithm is determining the PSF of the instrument. Typically, the PSF of an instrument might be constant across the entire CCD, allowing simplification of the deconvolution. However, the PSF of EXPRES changes significantly between orders and even slightly along a single order. For example, the bluest orders on the detector are about 2 pixels taller than the reddest orders.
 
-Therefore, a parameterized 
+Thus, a parameterized PSF modal is necessary to map out the PSF pixel-by-pixel. The input to the spectrograph is a rectangular fiber, therefore it makes sense to use a rectangular top hat function as the PSF. However, due to the nature of free space optical paths through chromatic optics, this top hat would be smoothed before it hits the CCD. Therefore, I chose to construct a PSF model that is the convolution of of this tophat and a 2D gaussian function. This combination actually has an analytic solution
+\begin{multline}
+    \Psi(x, y; A, \theta_x, \theta_y, d_x, d_y, \sigma_x, \sigma_y) = \\
+    \frac{1}{4} \Bigg[\Phi\bigg(\frac{x' + d_x/2}{\sigma_x \sqrt{2}}\bigg) - \Phi\bigg(\frac{x' - d_x/2}{\sigma_x \sqrt{2}}\bigg)\Bigg] \Bigg[\Phi\bigg(\frac{y' + d_y/2}{\sigma_y \sqrt{2}}\bigg) - \Phi\bigg(\frac{y' - d_y/2}{\sigma_y \sqrt{2}}\bigg)\Bigg]
+    \label{eq:expres_psf}
+\end{multline}
+where $\Phi(x)$ is the error function, and $x',y'$ are related to $x,y$ by a linear transformation as
+\begin{equation}
+    \begin{bmatrix}x' \\ y' \end{bmatrix} = 
+    \begin{bmatrix}\cos \theta_x & -\sin\theta_x \\ \sin \theta_y & \cos\theta_y\end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}.
+\end{equation}
 
-Need an accurate representation of the PSF parameters across the entire CCD.
+This parameterization is advantageous because it is aptly descriptive of the intuited EXPRES PSF:
+\begin{itemize}
+    \item $d_x$ and $d_y$ are the dimensions of the unsmoothed rectangular tophat function,
+    \item $\sigma_x$ and $\sigma_y$ correlate with the amount of smoothing the in x- and y-directions respectively, and
+    \item $\theta_x$ and $\theta_y$ correspond to the angles the vertical and horizontal edges of the rectangle make with respect to the CCD pixels.
+\end{itemize}
+Not only does this model allow us to map the PSF across the CCD with only eight parameters (and a variable amplitude), it also provides information on the magnification and de-focusing of the instrument. Also, since we expect these parameters to vary smoothly across the detector, we can more easily interpolate (and possibly extrapolate) to regions without easily measureable PSFs.
 
-Convolving a rectangle with a Gaussian makes a lot of sense intuitively for the spectrograph optics.
+This brings me to the question: how can we actually measure the PSF of EXPRES and produce a parameterization map? I have found two viable options: (1) the ThAr lamp already integrated with EXPRES, and (2) an AlN microcomb that has a sufficiently wide FSR. These options are optimal because they are sparse emission line light sources, therefore providing sharply peaked lines over the entire bandwidth of the instrument. We would not be able to use the Menlo LFC, because the lines are much too close together. The resolution of EXPRES (in terms of frequency) is about \SI{3}{\giga\hertz} while the lines of the LFC are spaced at about \SI{10}{\giga\hertz}. Thus, the tails of each LFC line iteract with each neighboring line, removing the ability to precisely measure the PSF of each line.
 
-Also good because it means we could easily craft a deconvolved PSF if we wanted.
+There is already a great deal of data taken by EXPRES that can be used to measure the pixel-dependent PSF. ThAr images are taken during every night of observation and these spectra easily cover the entire bandwidth of EXPRES. Also, the Yale Nanodevices lab provided me with an $\sim$\SI{800}{\giga\hertz} FSR AlN microcomb to use with EXPRES. An image of the microcomb setup at the Discovery Channel Telescope are shown in figure \ref{fig:aln_setup}. This device uses SHG and THG similarly to that described in section \ref{sec:astrocomb}, but it does not require an external IR comb since it produces one intrinsically through whispering gallery resonances in an AlN microring (see the inset of Figure \ref{fig:aln_setup}). I was able to take over 300 images with 6 different microcomb devices at multiple pump laser wavelengths. Although individual images may only cover a about 1/3 to 1/2 of the EXPRES bandpass, by changing the devices and pump laser wavelength, the complete set of data covers most of EXPRES.
 
-Sparse emission sources are good for this. ThAr is not ideal because there are many doublets and background continuua that make things complicated. Microcomb might not be ideal due to improper stability of the pump laser. These values were stable to only about 1pm, which is visible to the spectrograph on the order of 1/2 a pixel.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/aln_setup.png}
+    \caption{The microcomb setup at the Discovery Channel Telescope. In inset is a top-down image of the AlN microring while it is resonating.}
+    \label{fig:aln_setup}
+\end{figure}
+
+Unfortunately, neither of these light sources are perfect for this application. ThAr emission lines frequently come in doublets making individual lines difficult to extract. Also, some regions of the of the spectrum are so dense that they appear as a continuum, skewing the PSF results. The microcomb also occasionally produces ``doublet''-like structure caused by a Raman comb---a phenomenon where light created by Raman scattering the pump laser weakly resonates in the microring---that happens to be just offset from the primary laser comb. Also, the pump laser is only locked to about \SI{1}{\pico\meter}, which could cause some blurring of each line by less than 0.5 pixels along each order.
+
+Using the data from the images for testing, I have constructed a PSF modelling software package. This package uses an automatic peak-finding algorithm to locate as many lines as it can across the entire image. It then fits the PSF model from Eq. \ref{eq:expres_psf} to each line and records the calculated parameters. As shown in Figure \ref{fig:psf_comparison}, the residuals of the model fit are very small and seemingly random. This code is also able to plot these parameters in terms of $x$ and $y$, as shown for both a ThAr emission spectrum and a microcomb spectrum in Figure \ref{fig:psf_params}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/psf_comparison.png}
+    \caption{Comparison between a microcomb line and the fit psf model from Eq. \ref{eq:expres_psf}. The thumbnail for each line is scaled such that the total sum of counts is 1.}
+    \label{fig:psf_comparison}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/psf_params.png}
+    \caption{Preliminary PSF parameter maps in $x$ and $y$ for both the ThAr and microcomb sources. The images these data were taken from were taken on the same day, thereby assuming the same spectrograph configuration.}
+    \label{fig:psf_params}
+\end{figure}
+
+I expect to continue using this code to create an entire 2D pixel map for each PSF parameter. I will take the parameterization results from a large set of data and fit a 2D low-order polynomial in $x$ and $y$ to each parameter. I can then use these polynomials to construct a PSF for any pixel position on the EXPRES detector, even in those locations that are not covered by ThAr or a microcomb. I can then use this information to better construct an EXPRES spectro-perfectionism algorithm.
 
 \subsection{Improving the spectro-perfectionism algorithm}
+
+As explained in Section \ref{subsec:spec_perf_intro}, the specto-perfectionism algorithm is actually a form of deconvolution. Thus, I have looked into ways of optimizing deconvolution for use with a 2D echelle spectrum. For example, it should utilize the fact that the PSF of the instrument is so small (approximately $4 \times 16$ pixels) compared to the size of the CCD array ($10k \times 10k$ pixels) and that the PSF is slowly varying across the CCD. Therefore, an entire $10k \times 10k$ calculated PSF should not necessary for every deconvolved pixel.
+
+The best method I have found so far is gold iterative deconvolution \citep{Morhac2003}. Notice that any inverse matrix can be expanded as
+\begin{equation}
+    \mathbf{C}^{-1} = (\mathbbm{1}-(\mathbbm{1}-\mathbf{C}))^{-1} \sim \mathbbm{1} + (\mathbbm{1}-\mathbf{C}) + (\mathbbm{1}-\mathbf{C})^2 + (\mathbbm{1}-\mathbf{C})^3 + ...
+    \label{eq:inverse_expansion}
+\end{equation}
+Thus, to solution to the matrix equation $\mathbf{y} = \mathbf{C} \mathbf{x}$ can be written iteratively:
+\begin{equation}
+    \mathbf{x}^{(k+1)} = \mathbf{x}^{(k)}
+\end{equation}
+
+to appropriately calculate Eq. \ref{eq:bolton_solution} (assuming pixel noise is the identity matrix)
+
 
 Going with Regularized Gold Deconvolution to prevent undersampling from the resultant image.
 
